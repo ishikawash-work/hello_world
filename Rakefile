@@ -1,5 +1,4 @@
 require "git"
-require "logger"
 
 def log(message)
   $stderr.puts("** #{message}")
@@ -39,14 +38,11 @@ def create_tag(version)
   tag
 end
 
-def main
+task :tag do
   version = `cat VERSION`.strip
   if tag = create_tag(version)
     log("CREATED: #{tag.name}")
   else
     log("ABORT")
-    exit(1)
   end
 end
-
-main
