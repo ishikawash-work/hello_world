@@ -32,18 +32,18 @@ def create_tag(version)
   print "Do you push #{tag.name} ? [y/n]> "
   answer = $stdin.readline.strip.downcase
   unless answer == "y"
-    log("CANCELED")
     return
   end
   g.push("origin", tag.name)
-  log("PUSHED")
 
   tag
 end
 
 def main
   version = `cat VERSION`.strip
-  unless create_tag(version)
+  if tag = create_tag(version)
+    log("CREATED: #{tag.name}")
+  else
     log("ABORT")
     exit(1)
   end
